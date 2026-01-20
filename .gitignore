@@ -1,0 +1,28 @@
+# Ignore all LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+*.xdv
+
+# Ignore intermediate files from editors
+*.swp
+*.bak
+*.tmp
+
+# Ignore output PDFs (optional)
+*.pdf
+
+# Ignore build directories
+_build/
+latex.out/
