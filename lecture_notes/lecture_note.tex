@@ -9,13 +9,21 @@
 
 \maketitle
 
-\section{Class 1}
+\section{Class 1: ODE}
 \begin{itemize}
     \item Read IEEE standard for basic algorithms. Each machine has its own smallest float number that's significant (machine $\epsilon$).
     \item Sampling frequency is important because if it's too large, we can lose the real pattern of the function (for example, wave function is read as constant value if we sample at maximum points only)
     \item Lax equivalence theorem: If a \textbf{consistent}, linear method is \textbf{stable}, it will \textbf{converge}.
 \end{itemize}
 
-
+\section{Class 2: 1-D Linear Advection}
+\begin{itemize}
+    \item Choosing which method to use needs to consider whether we can perform parallelization to keep locality.
+    \item Given $u>0$, FTBS is upstream because the value from $j-1$ is used to approximate $j$.
+    \item With Von Neumann stability analysis, we often bound the amplification factor with $|A|\leq1$. However, for advection problem, we expect $|A|=1$ to keep the shape as physically and analytically known.
+    \item \textbf{Domain of dependence in CFL criterion}: Numerically, we only use $j-1$ to assess $j$. However, if $u\Delta t > 1$, analytically, it means that we need information on the left of $j-1$. This gives us the condition that $u\Delta t \leq \Delta x$ to have meaningful method.
+    \item Damping error can be seen as diffusion effect. The true solution is only reached when $c=1$ since there's no more approximation. Values in $j$ exactly comes from $j$.
+    \item Note that in literature, Courant number is $c=u\Delta t / \Delta x$.
+\end{itemize}
 
 \end{document}
