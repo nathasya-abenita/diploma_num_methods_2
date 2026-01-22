@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from typing import Callable
+plt.style.use('dark_background') # use dark mode style
 
 class LinearAdvection:
     def __init__(self, 

@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from typing import Callable
+plt.style.use('dark_background') # use dark mode style
 
 class Integrate:
     def __init__ (self, 
@@ -83,7 +84,7 @@ if __name__ == '__main__':
     fig, axs = plt.subplots(2, 1, figsize=(12, 9), sharex=True)
     axs[0].plot(xs, sols_euler, label='Euler scheme')
     axs[0].plot(xs, sols_heun, label='Heun scheme')
-    axs[0].plot(xs, solfunc(xs), '--k', label='Analytical solution')
+    axs[0].plot(xs, solfunc(xs), '--r', label='Analytical solution')
     axs[0].set_title(rf'Solution with $dx={dx}$')
     axs[0].set_xlabel('$x$'); axs[0].set_ylabel('$y$')
     axs[0].legend(); axs[0].grid()
