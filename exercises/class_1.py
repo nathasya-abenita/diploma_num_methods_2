@@ -9,16 +9,16 @@ class Integrate:
         self.dfunc = dfunc
         self.solfunc = solfunc
 
-    def integrate_euler(self, x: float, y: float, dx: float):
+    def integrate_euler(self, x: float, y: float, dx: float) -> float:
         return y + dx * self.dfunc(x, y)
 
-    def integrate_heun(self, x: float, y: float, dx: float):
+    def integrate_heun(self, x: float, y: float, dx: float) -> float:
         f0 = self.dfunc(x, y)
         ystar = y + dx * f0
         xp = x + dx
         return y + 0.5 * dx * (f0 + self.dfunc(xp, ystar))
     
-    def perform_euler(self, x: float, y: float, dx: float, nx: int):
+    def perform_euler(self, x: float, y: float, dx: float, nx: int) -> float:
         # Initialize solution array and initial condition
         sols = np.empty(nx)
         sols[0] = y
@@ -37,7 +37,7 @@ class Integrate:
             errors[i] = y - self.solfunc(x)
         return sols, errors
     
-    def perform_heun (self, x: float, y: float, dx: float, nx: int):
+    def perform_heun (self, x: float, y: float, dx: float, nx: int) -> float:
         # Initialize solution array
         sols = np.empty(nx)
         sols[0] = y
@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     # Define initial conditions
     x0, x1 = 0.0, 10.0  # Interval of x
-    dx = 0.1            # Time interval
+    dx = 0.1            # Time step size
     y0 = 0.0            # Initial condition of y at t = 0
 
     # Compute space intervals
