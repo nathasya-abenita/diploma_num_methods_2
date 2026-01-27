@@ -26,3 +26,6 @@
 # Ignore build directories
 _build/
 latex.out/
+
+# Ignore slides folder
+/slides
