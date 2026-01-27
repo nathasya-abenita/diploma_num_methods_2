@@ -76,7 +76,7 @@ class CTCS_RAW:
 
         # Decorate plot
         plt.suptitle(r'Solution of $\phi$ using leapfrog scheme')
-        plt.title(rf'$c={self.c}, \alpha = {self.alpha :.2f}, \beta = {self.beta: .2f}, \Delta t={self.dt :.2f}, u={self.u}$')
+        plt.title(rf'$c={self.c :.2f}, \alpha = {self.alpha :.2f}, \beta = {self.beta: .2f}, \Delta t={self.dt :.2f}, u={self.u}$')
         plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         plt.xlabel('$x$')
         plt.tight_layout()
