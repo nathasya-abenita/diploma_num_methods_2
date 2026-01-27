@@ -9,14 +9,14 @@
 
 \maketitle
 
-\section{Class 1: ODE}
+\section{ODE}
 \begin{itemize}
     \item Read IEEE standard for basic algorithms. Each machine has its own smallest float number that's significant (machine $\epsilon$).
     \item Sampling frequency is important because if it's too large, we can lose the real pattern of the function (for example, wave function is read as constant value if we sample at maximum points only)
     \item Lax equivalence theorem: If a \textbf{consistent}, linear method is \textbf{stable}, it will \textbf{converge}.
 \end{itemize}
 
-\section{Class 2: 1-D Linear Advection}
+\section{1-D Linear Advection, FTBS and FTFS}
 \begin{itemize}
     \item Choosing which method to use needs to consider whether we can perform parallelization to keep locality.
     \item Given $u>0$, FTBS is upstream because the value from $j-1$ is used to approximate $j$.
@@ -24,6 +24,40 @@
     \item \textbf{Domain of dependence in CFL criterion}: Numerically, we only use $j-1$ to assess $j$. However, if $u\Delta t > 1$, analytically, it means that we need information on the left of $j-1$. This gives us the condition that $u\Delta t \leq \Delta x$ to have meaningful method.
     \item Damping error can be seen as diffusion effect. The true solution is only reached when $c=1$ since there's no more approximation. Values in $j$ exactly comes from $j$.
     \item Note that in literature, Courant number is $c=u\Delta t / \Delta x$.
+\end{itemize}
+
+\section{1-D Linear Advection, CTCS}
+\begin{itemize}
+    \item Remember that two-variable Taylor expansion evaluated at $(x,t)$ is
+    \[ f(x+\Delta x, t+\Delta t) = \Sigma_{i=0}^{\infty} \frac{1}{i!}\left(\Delta x \frac{\partial}{\partial x} + \Delta t \frac{\partial}{\partial t}\right)^i f(x,t) \]
+    \item CTCS is order of $O(\Delta x^3, \Delta t^3)$. It's a second order scheme, thus we order root factor in the stability solution.
+    \item It's also called the leapfrog method because we don't use the same spatial point on the previous time, but its neighbors.
+    \item For exercise, try to prove the stability of the CTCS. Note that we can write
+    \[
+        u^{n+1} = A u^n, u^{n-1} = \frac{1}{A} u^n
+    \]
+    \item When $|A|=1$, we also say it as neutrally stable since there's no amplification or decay factor. Also, the nice thing CTCS is the fact that it's applicable for both signs of the advection velocity ($u$).
+    \item Note that
+    \[ \lim_{\Delta t \rightarrow 0} A_+ = 1,  \lim_{\Delta t \rightarrow 0} A_- = -1 \]
+    which means for the negative amplitude, we have oscillation of the sign of $u$ with frequency of $2\Delta t$.
+    \item Write
+    \[ c=u\frac{\Delta t}{\Delta x}, A_{\pm} = -i\sigma \pm \sqrt{1-\sigma^2}, \theta = c\sin{k\Delta x} \]
+    Given
+    \[A_{\pm} = |A_\pm| e^{i\theta}\]
+    where the modulus is one, we can write
+    \[A_+ = e^{i\theta_+}, A_- = e^{i(\theta_- + \pi)}\]
+    such that the negative amplitude is experiencing rotation of 180 degree for each time step. Note that
+    \[ \theta_+ \sigma -\sigma, \theta_- \sim +\sigma \]
+    
+    \item Thus, we can assess the numerical velocity, denoted by $v_{CTCS}=-\frac{\theta}{k\Delta t}$. We can prove that for the positive solution is $v = -\frac{\theta^+}{k\Delta t} = u\frac{\sin{(k\Delta x)}}{k \Delta x}$ while the negative solution is $u\frac{\sin{(k\Delta x)}}{k \Delta x}$. This show that we have a delay for the negative solution, relating to the computational mode--a trade-off from this scheme. This gives us the wiggle we see in the solution.
+    
+    \item For the previous point, we need to use calculus hints relating to Euler form of $e^{i\theta}$, arctan definition, and infinite series (peek at Bee's note)
+    \item To deal with the wiggle, we apply filter. The algorithm is
+    \begin{enumerate}
+        \item Compute prediction using leapfrog, but use the mean value for time step of $n-1$: $\bar{\phi_j^{n-1}}$
+        \item Apply correction
+        \[ \bar{\phi_j^n} = \phi_j^n + \alpha (\bar{\phi_j^{n-1}} -2\phi_j^n + \phi_j^{n+1}) \]
+    \end{enumerate}
 \end{itemize}
 
 \end{document}
