@@ -48,7 +48,7 @@ class CTCS_RAW:
         plt.figure(figsize=(12, 6))
         self.plot_phi(phi_old, 0)
 
-        # Update streamfunction by using the upwind scheme
+        # Update streamfunction by using the leap-frog scheme
         # for the first time step
         if u > 0:
             phi_now = self.ftbs(phi_old)
