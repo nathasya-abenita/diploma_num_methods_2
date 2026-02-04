@@ -49,12 +49,10 @@ class LinearAdvection:
                 m = int(floor(xdep / self.dx))
                 # Compute fraction
                 alpha = (xdep / self.dx) - m
-                # Correct m index
-                m = m + 1
                 # Right index (m-1 in PPT) and apply periodic boundary if needed
-                mp = m + 1
-                if (mp == self.nx): # By applying periodic boundary, index 0 is the same as nx-1, so index nx is the same as 1
-                    mp = 1
+                mp = int((m + 1) % (self.nx - 1))
+                # By applying periodic boundary, index 0 is the same as nx-1, so index nx is the same as 1
+            
                 # Apply interpolation
                 phi_new[j] = (1 - alpha) * phi_now[m] + alpha * phi_now[mp]
 
@@ -95,19 +93,14 @@ class LinearAdvection:
                 m = int(floor(xdep / self.dx))
                 # Compute fraction
                 alpha = (xdep / self.dx) - m
-                # Correct index m
-                m = m + 1 
+    
                 # Left indexes (no need to correct it since Python does periodic calling for negative indexing) 
-                m_p, m_pp = m - 1, m - 2
+                m_p = m - 1
                 # Right indexes and apply periodic boundary if needed
-                mp = m + 1 # m - 1
-                mpp = m + 2 # m - 2
-                if (mp == self.nx): # By applying periodic boundary, index 0 is the same as nx-1, so index nx is the same as 1
-                    mp = 1
-                if (mpp == self.nx):
-                    mpp = 1
-                elif (mpp == self.nx + 1):
-                    mpp = 2
+                mp = int((m + 1) % (self.nx - 1)) # m - 1
+                mpp = int((m + 2) % (self.nx - 1)) # m - 2
+                # By applying periodic boundary, index 0 is the same as nx-1, so index nx is the same as 1
+
                 # Apply interpolation
                 phi_new[j] = - alpha * (1 - alpha**2) / 6 * phi_now[mpp]        \
                              + alpha * (1+alpha) * (2-alpha) / 2 * phi_now[mp]  \
