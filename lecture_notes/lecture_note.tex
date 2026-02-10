@@ -76,13 +76,27 @@
     \item See Chapter 13 in book for more information. We can exercise with time-varying space velocity.
 \end{itemize}
 
-\section{Boundary conditions}
+\section{Boundary Conditions}
 \begin{itemize}
     \item Dirichlet boundary: values are imposed; Von Neumann boundary: the derivatives are imposed.
     \item We can also set the boundary condition geometrically which becomes numerical artifacts. For example, periodic condition is relevant in modelling the global atmosphere as a box.
     \item Damping of the solution for diffusion equation is quicker for shortwave since wave number $k$ is inversely proportional with wavelength $\lambda$.
     \item For the first scheme that we studied the stability analysis, the negative root is a computational mode, while the positive root is the physical mode (diffusion mode). This is the example where we have unconditionally unstable scheme, relating to the negative root amplitude.
     \item See Chapter 4 in the textbook.
+\end{itemize}
+
+\section{Tri-Diagonal Matrix Algorithm, Diffusion Eq.}
+\begin{itemize}
+    \item Before, we've been learning about explicit scheme: $n+1$ index on the LHS and $n$ index (and previous ones) on the RHS.
+    \item Now, we are encountering implicit scheme where we have $n+1$ on both sides. We can solve this because we have an idea already about the current solution, i.e boundary condition.
+    \item To be able to solve implicit scheme, we have to ensure that it exists an index $j$ that can be solved with $j=0$ or $j=N_x$ (boundary conditions).
+    \item The implicit scheme allows us to transfer PDE to linear algebra problem where we already have efficient libraries to solve it, i.e invert a square matrix.
+    \item TDMA allows us to solve the matrix without inverting the matrix, which is nice because it's cheaper this way.
+    \item The scheme we're using today is unconditionally stable. This is intuitive to know since we're not using $\Delta t$ in the algorithm.
+    \item Although it's unconditionally stable, care must be put in choosing $\Delta t$ that's appropriate for the problem resolution and to reduce error.
+    \item Implicit scheme is very useful in the atmosphere modelling because we can use it to solve the vertical axis where we often impose fixed values at the surface and TOA. Also to assess perturbation.
+    \item Implicit scheme is generally unconditionally stable, but again it depends on whether it's solveable or not (do we have enough information of the solution as the 'boundary condition').
+    \item See Chapter 4.6 in the textbook.
 \end{itemize}
 
 \end{document}
