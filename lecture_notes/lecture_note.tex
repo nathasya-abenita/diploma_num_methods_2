@@ -67,7 +67,7 @@
     \item The idea of SL is that when we know the values at all grid points at $t_n-1$, then we can use them to interpolate the value in $depx_j$.
     \item Geometrically, we can see $m$ index as the index nearest to $depx_j$ and $j$.
     \item We can compute index $m$ by using floor or ceiling method. If we use floor, it means that we have $m$ and $m+1$ indexes, whereas ceiling means we have $m$ and $m-1$.
-    \item As long as $0 <= \alpha <= 1$, it means that we're choosing nearest points, thus the scheme is guaranteed to be stable.
+    \item As long as $0 \leq \alpha \leq 1$, it means that we're choosing nearest points, thus the scheme is guaranteed to be stable.
     \item In principle, $\alpha$ can keep changing since $u$ can change in time.
     \item The advantage of the scheme is it's unconditionally stable as long we choose the correct $\alpha$, so we don't need to be concerned about choice of $\Delta t$.
     \item The disadvantage is that it's not local. It requires information from the whole space domain, such that the stencil is not only to its neighboring points, but it's bigger, the whole domain itself. Especially when $u$ is changing in space, such that we often compute average velocity over the space.
