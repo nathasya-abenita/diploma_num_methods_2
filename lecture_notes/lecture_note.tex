@@ -99,4 +99,12 @@
     \item See Chapter 4.6 in the textbook.
 \end{itemize}
 
+\section{Advection-Diffusion}
+\begin{itemize}
+    \item Diffusion term is added because we want to filter certain behavior given a spatial resolution?
+    \item From the hindsight analysis, we see how error with certain order is diffusive. (It's even order)
+    \item For non-linear problem, where the stream function is increasing, our scheme (i.e CTCS) can blow up easily. The scheme has tendency to increaste the gradient. That's why we put diffusion term just to reduce this numerical error.
+    \item We care about choosing $K$ that's appropriate with the velocity for advection equation for velocity.
+\end{itemize}
+
 \end{document}
