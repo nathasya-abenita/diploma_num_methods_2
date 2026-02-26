@@ -22,15 +22,15 @@
     \item Given $u>0$, FTBS is upstream because the value from $j-1$ is used to approximate $j$.
     \item With Von Neumann stability analysis, we often bound the amplification factor with $|A|\leq1$. However, for advection problem, we expect $|A|=1$ to keep the shape as physically and analytically known.
     \item \textbf{Domain of dependence in CFL criterion}: Numerically, we only use $j-1$ to assess $j$. However, if $u\Delta t > 1$, analytically, it means that we need information on the left of $j-1$. This gives us the condition that $u\Delta t \leq \Delta x$ to have meaningful method.
-    \item Damping error can be seen as diffusion effect. The true solution is only reached when $c=1$ since there's no more approximation. Values in $j$ exactly comes from $j$.
+    \item Damping error can be seen as diffusion effect. The true solution is only reached when $c=1$ since there's no more approximation. Values in $j$ exactly comes from $j-1$ (or $j+1$).
     \item Note that in literature, Courant number is $c=u\Delta t / \Delta x$.
 \end{itemize}
 
 \section{1-D Linear Advection, CTCS}
 \begin{itemize}
     \item Remember that two-variable Taylor expansion evaluated at $(x,t)$ is
-    \[ f(x+\Delta x, t+\Delta t) = \Sigma_{i=0}^{\infty} \frac{1}{i!}\left(\Delta x \frac{\partial}{\partial x} + \Delta t \frac{\partial}{\partial t}\right)^i f(x,t) \]
-    \item CTCS is order of $O(\Delta x^3, \Delta t^3)$. It's a second order scheme, thus we order root factor in the stability solution.
+    \[ f(x+\Delta x, t+\Delta t) = \Sigma_{i=0}^{\infty} \frac{1}{i!}\left(\Delta x \frac{\partial}{\partial x} + \Delta t \frac{\partial}{\partial t}\right)^i f^{(i)}(x,t) \]
+    \item CTCS is order of $O(\Delta x^2, \Delta t^2)$. It's a second order scheme, thus we order root factor in the stability solution.
     \item It's also called the leapfrog method because we don't use the same spatial point on the previous time, but its neighbors.
     \item For exercise, try to prove the stability of the CTCS. Note that we can write
     \[
@@ -47,7 +47,7 @@
     where the modulus is one, we can write
     \[A_+ = e^{i\theta_+}, A_- = e^{i(\theta_- + \pi)}\]
     such that the negative amplitude is experiencing rotation of 180 degree for each time step. Note that
-    \[ \theta_+ \sigma -\sigma, \theta_- \sim +\sigma \]
+    \[ \theta_+ \sim -\sigma, \theta_- \sim +\sigma \]
     
     \item Thus, we can assess the numerical velocity, denoted by $v_{CTCS}=-\frac{\theta}{k\Delta t}$. We can prove that for the positive solution is $v = -\frac{\theta^+}{k\Delta t} = u\frac{\sin{(k\Delta x)}}{k \Delta x}$ while the negative solution is $u\frac{\sin{(k\Delta x)}}{k \Delta x}$. This show that we have a delay for the negative solution, relating to the computational mode--a trade-off from this scheme. This gives us the wiggle we see in the solution.
     
@@ -105,7 +105,10 @@
     \item From the hindsight analysis, we see how error with certain order is diffusive. (It's even order)
     \item For non-linear problem, where the stream function is increasing, our scheme (i.e CTCS) can blow up easily. The scheme has tendency to increaste the gradient. That's why we put diffusion term just to reduce this numerical error.
     \item We care about choosing $K$ that's appropriate with the velocity for advection equation for velocity.
+    \item After performing Neumann stability analysis to the CTCS scheme, we obtain
+    \[ \Delta t \leq \frac{1}{u^2} (-2k + \sqrt{4k^2 + u^2\Delta x^2}) \]
 \end{itemize}
+
 
 \section{Gravity Wave}
 \begin{itemize}
